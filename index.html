@@ -1,0 +1,63 @@
+<html lang="">
+    <head>
+        <title>catcloud.org</title>
+        <style>
+            body {
+                margin: 0
+            }
+
+            #frame {
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+            }
+
+            #image {
+                transform: translateX(-10vw) translateY(-10vh);
+                height: 110vh;
+                width: 110vw;
+                background-image: url("catcloud.webp");
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
+        <script>
+            function move(event) {
+                const frame = document.getElementById("frame");
+                const image = document.getElementById("image");
+
+                const x = event.pageX / window.innerWidth * 10;
+                const y = event.pageY / window.innerHeight * 10;
+
+                if (x > 4.55 && x < 5.5 && y > 4 && y < 5.5) frame.style.cursor = "grab";
+                else frame.style.cursor = "default";
+
+                setTimeout(() => image.style.transform = `translateX(-${x}vw) translateY(-${y}vh)`, 20);
+            }
+
+            function reset() {
+                const frame = document.getElementById("frame");
+                const image = document.getElementById("image");
+
+                frame.style.cursor = "default";
+
+                image.style.transitionDuration = "200ms";
+                image.style.transform = "translateX(-5vw) translateY(-5vh)";
+                setTimeout(() => image.style.transitionDuration = "0ms", 200);
+            }
+
+            function listen() {
+                const image = document.getElementById("image");
+
+                image.onmousemove = move;
+                image.onmouseleave = reset;
+            }
+        </script>
+    </head>
+    <body>
+        <div onmouseenter="listen()" id="frame">
+            <div id="image"></div>
+        </div>
+    </body>
+</html>
